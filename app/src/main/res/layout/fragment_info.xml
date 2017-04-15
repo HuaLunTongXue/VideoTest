@@ -1,0 +1,130 @@
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="kevin.android.om.videotest.fragments.InfoFragment">
+
+    <ImageView
+        android:id="@+id/vendor_home_weather_sunny_background"
+        app:layout_aspectRatio="21.08%"
+        android:background="@drawable/vendor_home_weather_sunny_background"
+        app:layout_marginLeftPercent="3.12%"
+        app:layout_marginRightPercent="2.99%"
+        app:layout_widthPercent="93.88%" />
+
+    <TextView
+        android:id="@+id/vendor_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_alignBaseline="@+id/vendor_date_tv"
+        android:textColor="#FFF"
+        android:textSize="64dp"
+        app:layout_heightPercent="65.78%"
+        app:layout_marginLeftPercent="6.64%"
+        app:layout_marginTopPercent="8.56%"
+        android:text="10:00" />
+
+    <ImageView
+        android:id="@+id/vendor_home_position_icon"
+        android:src="@drawable/vendor_home_position_icon"
+        app:layout_aspectRatio="123.52%"
+        app:layout_heightPercent="13.81%"
+        app:layout_marginLeftPercent="7.41%"
+        app:layout_marginTopPercent="61.64%"
+        app:layout_widthPercent="2.21%" />
+
+    <TextView
+        android:id="@+id/vendor_space_tv"
+        android:textColor="#FFF"
+        android:textSize="15sp"
+        app:layout_heightPercent="13.81%"
+        app:layout_marginLeftPercent="10.41%"
+        app:layout_marginTopPercent="61.18%"
+        app:layout_widthPercent="4.90%"
+        android:text="上海" />
+
+    <ImageView
+        android:id="@+id/vendor_weather_img"
+        android:src="@drawable/vendor_weather_sunny_icon"
+        app:layout_heightPercent="27.63%"
+        app:layout_marginLeftPercent="16.27%"
+        app:layout_marginTopPercent="61.84%"
+        app:layout_widthPercent="5.46%" />
+
+    <TextView
+        android:id="@+id/vendor_weather_tv"
+        android:layout_width="wrap_content"
+        android:text="晴天"
+        android:textColor="#FFF"
+        android:textSize="10sp"
+        app:layout_marginLeftPercent="22.55%"
+        app:layout_marginTopPercent="61.85%" />
+
+    <TextView
+        android:id="@+id/vendor_hello_tv"
+        android:layout_width="wrap_content"
+        android:textColor="#FFF"
+        android:textSize="26sp"
+        app:layout_heightPercent="24.34%"
+        app:layout_marginLeftPercent="30.87%"
+        app:layout_marginTopPercent="13.68%"
+        android:text="上午好" />
+
+    <TextView
+        android:id="@+id/vendor_date_tv"
+        android:textColor="#FFF"
+        android:textSize="18sp"
+        app:layout_aspectRatio="16.44%"
+        app:layout_marginLeftPercent="30.87%"
+        app:layout_marginTopPercent="36.97%"
+        app:layout_widthPercent="23.08%"
+        android:text="星期日 7月24日" />
+
+    <TextView
+        android:id="@+id/vendor_temperature_tv"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/vendor_weather_tv"
+        android:layout_alignStart="@+id/vendor_weather_tv"
+        android:paddingTop="5dp"
+        android:text="20"
+        android:textColor="#FFF"
+        android:textSize="32sp"
+        app:layout_marginLeftPercent="0.125%"
+        app:layout_marginTopPercent="62.14%"
+        app:layout_widthPercent="8.07%" />
+
+    <TextView
+        android:id="@+id/vendor_machineID_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/vendor_temperature_tv"
+        android:textColor="#FFF"
+        android:textSize="12sp"
+        app:layout_marginLeftPercent="30.87%"
+        app:layout_marginTopPercent="69.04%"
+        android:text="机器号：93002951" />
+
+    <TextView
+        android:id="@+id/vendor_hottel_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/vendor_temperature_tv"
+        android:textColor="#FFF"
+        android:textSize="12sp"
+        app:layout_marginLeftPercent="46.79%"
+        app:layout_marginTopPercent="69.04%"
+        android:text="客服电话：021-61151616" />
+
+
+    <!--<ImageView--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_alignParentLeft="true"--><!--android:layout_centerVertical="true"--><!--android:layout_marginLeft="20dp"--><!--android:src="@drawable/vendor_home_logo" />-->
+
+    <!--<TextView--><!--android:id="@+id/home_info_factory_code_text"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_alignParentRight="true"--><!--android:layout_alignParentTop="true"--><!--android:textSize="18sp"--><!--android:text="机号：3104193048" />-->
+
+    <!--<TextView--><!--android:id="@+id/home_info_date_text"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_alignParentBottom="true"--><!--android:layout_alignParentRight="true"--><!--android:textSize="18sp"--><!--android:text="星期日 7月24日" />-->
+
+    <!--<TextView--><!--android:id="@+id/vendor_hottel_tv"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_alignBaseline="@+id/home_info_factory_code_text"--><!--android:layout_toLeftOf="@+id/home_info_factory_code_text"--><!--android:layout_toStartOf="@+id/home_info_factory_code_text"--><!--android:paddingRight="30dp"--><!--android:textSize="18sp"--><!--android:text="客服电话：021-61151616" />-->
+
+    <!--<TextView--><!--android:id="@+id/home_info_time_text"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_alignParentRight="true"--><!--android:layout_centerVertical="true"--><!--android:gravity="center"--><!--android:textSize="34sp"--><!--android:textStyle="bold"--><!--android:text="10:00" />-->
+
+
+</android.support.percent.PercentRelativeLayout>

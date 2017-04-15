@@ -1,0 +1,113 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="kevin.android.om.videotest.fragments.AdvertFragment">
+
+
+    <!--<com.pili.pldroid.player.widget.PLVideoView-->
+    <!--android:id="@+id/advert_video"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:background="@drawable/vendor_button_bg_white_shap"-->
+    <!--app:displayAspectRatio="@{model.displayAspectRatio}"-->
+    <!--app:onCompletion="@{model.onCompletion}"-->
+    <!--app:onError="@{model.onError}"-->
+    <!--app:videoPath="@{model.videoPath}" /> -->
+
+    <com.pili.pldroid.player.widget.PLVideoView
+        android:id="@+id/advert_video"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/vendor_button_bg_white_shap"
+        android:visibility="visible"
+        />
+
+    <!--<FrameLayout-->
+    <!--android:id="@+id/advert_video"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:background="@drawable/vendor_button_bg_white_shap" />-->
+
+    <ImageView
+        android:id="@+id/imageCover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/vendor_home_video_loading_rec"
+        android:visibility="visible" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="15dp"
+        android:src="@drawable/vendor_home_not_touch" />
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00000000"
+        android:visibility="visible">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <kevin.android.om.videotest.CornerImageView
+                android:id="@+id/cornerTopLeft"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:CBackground="@color/mainBg"
+                app:CCornerRadius="20dp"
+                app:CCornerWhich="CTopLeft" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <kevin.android.om.videotest.CornerImageView
+                android:id="@+id/cornerTopRight"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:CBackground="@color/mainBg"
+                app:CCornerRadius="20dp"
+                app:CCornerWhich="CTopRight" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <kevin.android.om.videotest.CornerImageView
+                android:id="@+id/cornerBottomLeft"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:CBackground="@color/mainBg"
+                app:CCornerRadius="20dp"
+                app:CCornerWhich="CBottomLeft" />
+
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <kevin.android.om.videotest.CornerImageView
+                android:id="@+id/cornerBottomRight"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:CBackground="@color/mainBg"
+                app:CCornerRadius="20dp"
+                app:CCornerWhich="CBottomRight" />
+
+        </FrameLayout>
+
+    </FrameLayout>
+
+</FrameLayout>

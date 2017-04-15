@@ -1,0 +1,42 @@
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="kevin.android.om.videotest.fragments.SurpriseFragment">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:id="@+id/flClickSurprise"
+        android:background="@drawable/vendor_home_surprise_background"
+        >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/surprise_img"
+                android:layout_width="165dp"
+                android:layout_height="165dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/vendor_home_surprise_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="点我有惊喜"
+                android:textSize="30sp" />
+
+        </LinearLayout>
+    </FrameLayout>
+
+</android.support.percent.PercentRelativeLayout>

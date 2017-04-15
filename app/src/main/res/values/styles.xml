@@ -1,0 +1,24 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <declare-styleable name="cornerImageView">
+        <attr name="CCornerWhich">
+            <enum name="CAll" value="0"/>
+            <enum name="CTopLeft" value="1"/>
+            <enum name="CTopRight" value="2"/>
+            <enum name="CBottomLeft" value="3"/>
+            <enum name="CBottomRight" value="4"/>
+        </attr>
+        <attr name="CCornerRadius" format="dimension" />
+        <attr name="CBackground" format="reference|color" />
+    </declare-styleable>
+
+</resources>
