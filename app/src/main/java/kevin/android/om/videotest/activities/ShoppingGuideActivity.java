@@ -28,9 +28,6 @@ import okhttp3.Response;
 
 public class ShoppingGuideActivity extends VActivity {
 
-    private TextView showInfo;
-    private static final String TEST_URL = "https://svmdemo02.hollywant.com/app_api/vmc";
-    private static final String json = "{\"jsonrpc\":\"2.0\",\"method\":\"call\",\"params\":{\"method\":\"vmc_ad_list\",\"machine_id\":\"6\",\"app_version\":\"0.5.0\"},\"id\":3}";
 
 
     @Override
@@ -38,20 +35,6 @@ public class ShoppingGuideActivity extends VActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_guide);
         (findViewById(R.id.mainBgId)).setBackgroundResource(R.color.mainBg);
-        showInfo  = (TextView)findViewById(R.id.showInfo);
-
-        new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            post(TEST_URL,json);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }
-        ).start();
 
 
 //        RequestQueue mQueue = Volley.newRequestQueue(this);
@@ -125,70 +108,7 @@ public class ShoppingGuideActivity extends VActivity {
 
     }
 
-    private void httpGet(String response){
-        try {
-            Gson gson = new Gson();
-            Log.e("test","response="+response);
-            JSONObject jsonObject = new JSONObject(response);
-            Object json;
-            String result;
-            json = jsonObject.opt("result");
-            Log.e("test","jsonObject.jsonrpc="+jsonObject.opt("jsonrpc"));
-            Log.e("test","jsonObject.id="+jsonObject.opt("id"));
-            Log.e("test","jsonObject.result="+jsonObject.opt("result"));
-            result = json.toString();
-            Log.e("result","result="+result);
-            Adv aModel = gson.fromJson(json.toString(),Adv.class);
-            Log.e("test","aModel.result="+aModel.total);
-            int length = aModel.records.size();
-            for(int i = 0;i<length;i++){
-                if(aModel.records.get(i).ad_type.equals("VIDEO")){
-                    Log.e("result","ad_url="+aModel.records.get(i).ad_url);
-                }
-            }
 
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public String post(String url, String json) throws IOException {
-        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-        OkHttpClient client = new OkHttpClient();
-        RequestBody body = RequestBody.create(JSON, json);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
-        Response response = client.newCall(request).execute();
-        if (response.isSuccessful()) {
-            String data = response.body().string();
-            httpGet(data);
-            Log.i("videoTest","response.body()="+data);
-
-            return response.body().string();
-        } else {
-            Log.i("videoTest",response.toString());
-
-            throw new IOException("Unexpected code " + response);
-        }
-    }
-
-
-    public class Adv{
-        public int total;
-        public ArrayList<Ads> records;
-
-        class Ads{
-            public int ad_order;
-            public String ad_url;
-            public String ad_detail;
-            public String ad_type;
-        }
-
-    }
 
 
 

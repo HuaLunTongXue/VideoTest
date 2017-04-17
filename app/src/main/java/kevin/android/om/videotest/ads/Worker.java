@@ -12,7 +12,7 @@ import java.util.Random;
  */
 public abstract class Worker extends Thread {
     private static final String TAG = "Worker";
-    private static final int RANDOM_INT = 0;
+    private static final int RANDOM_INT = 1000*3;
 
     private final Object lock = new Object();
     private boolean isStarted = false;

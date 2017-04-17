@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.support.v4.content.SharedPreferencesCompat;
 
 
+import com.google.gson.Gson;
+
 import java.io.File;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
@@ -12,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -32,17 +35,18 @@ public class AdsUtils {
         //no instance
     }
 
-//    public static void saveAdList(Context context, AdList ads) {
-//        final SharedPreferences sp = context.getSharedPreferences(AD_SP_NAME, Context.MODE_PRIVATE);
-//        Set<String> strings = new HashSet<>();
-//        for (Ads ad : ads.records) {
-//            strings.add(ad.toJSONObject().toString());
-//        }
-//
-//        final SharedPreferences.Editor editor = sp.edit();
-//        editor.putStringSet(AD_KEY_NAME, strings);
-//        SharedPreferencesCompat.EditorCompat.getInstance().apply(editor);
-//    }
+    public static void saveAdList(Context context, List<AdsUpdaterWorker.Adv.Ads> ads) {
+        final SharedPreferences sp = context.getSharedPreferences(AD_SP_NAME, Context.MODE_PRIVATE);
+        Set<String> strings = new HashSet<>();
+        for (AdsUpdaterWorker.Adv.Ads ad : ads) {
+            Gson gson = new Gson();
+            strings.add(gson.toJson(ad));
+        }
+
+        final SharedPreferences.Editor editor = sp.edit();
+        editor.putStringSet(AD_KEY_NAME, strings);
+        SharedPreferencesCompat.EditorCompat.getInstance().apply(editor);
+    }
 
     /**
      * 根据广告类型，返回广告

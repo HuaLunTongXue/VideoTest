@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import kevin.android.om.videotest.ads.AdsUpdaterWorker;
 import kevin.android.om.videotest.fragments.AdvertFragment;
 import kevin.android.om.videotest.fragments.GuideFragment;
 import kevin.android.om.videotest.fragments.ImageAdsFragment;
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         (findViewById(R.id.mainBgId)).setBackgroundResource(R.color.mainBg);
+
+
 
         final FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
@@ -89,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
         if (null != ft) {
             ft.commit();
         }
+
+        AdsUpdaterWorker.getInstance(this).startWork();
 
     }
 }
