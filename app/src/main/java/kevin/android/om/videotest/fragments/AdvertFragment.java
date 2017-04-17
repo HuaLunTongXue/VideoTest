@@ -1,7 +1,6 @@
 package kevin.android.om.videotest.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -14,9 +13,6 @@ import com.pili.pldroid.player.PLMediaPlayer;
 import com.pili.pldroid.player.widget.PLVideoView;
 
 import kevin.android.om.videotest.R;
-
-import static android.content.ContentValues.TAG;
-
 
 public class AdvertFragment extends Fragment implements PLMediaPlayer.OnCompletionListener,
                                                         PLMediaPlayer.OnErrorListener{
