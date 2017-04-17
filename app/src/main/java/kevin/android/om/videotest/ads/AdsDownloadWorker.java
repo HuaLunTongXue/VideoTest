@@ -141,7 +141,7 @@ public class AdsDownloadWorker extends Worker {
                 }
             }
 
-            cacheFile = new File(cacheDir, AdsUtils.getCacheFileName(request.url) + "a");
+            cacheFile = new File(cacheDir, AdsUtils.getCacheFileName(request.url) + ".temp");
             Log.v(TAG, "文件保存位置: " + cacheFile.getAbsolutePath());
 
             url = new URL(request.url);

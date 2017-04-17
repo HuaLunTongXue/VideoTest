@@ -35,7 +35,7 @@ public class AdsUpdaterWorker extends Worker{
     private WeakReference<Context> mContext;
     private static final String TEST_URL = "https://svmdemo02.hollywant.com/app_api/vmc";
     private static final String json = "{\"jsonrpc\":\"2.0\",\"method\":\"call\",\"params\":{\"method\":\"vmc_ad_list\",\"machine_id\":\"6\",\"app_version\":\"0.5.0\"},\"id\":3}";
-
+    private static final int UPDATE_TIME = 60*1000;
 
     //构造方法
     private AdsUpdaterWorker(Context context) {
@@ -54,20 +54,24 @@ public class AdsUpdaterWorker extends Worker{
         return INSTANCE;
     }
 
-//    /**
-//     * 通知广告已更新
-//     *
-//     * @param list
-//     */
-//    private void notifyAdsUpdate(AdList list) {
-//        Intent intent = new Intent();
-//        intent.setAction(ACTION_ADS_UPDATE);
-//        intent.putExtra(Extras.DATA, (Parcelable) list);
-//        final Context context = mContext.get();
-//        if (context != null) {
-//            context.sendBroadcast(intent);
-//        }
-//    }
+    /**
+     * 通知广告已更新
+     *
+     * @param list
+     */
+    private void notifyAdsUpdate(List<Adv.Ads> list) {
+        Intent intent = new Intent();
+        intent.setAction(ACTION_ADS_UPDATE);
+        String[] urls = new String[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            urls[i] = list.get(i).ad_url;
+        }
+        intent.putExtra("adsList", urls);
+        final Context context = mContext.get();
+        if (context != null) {
+            context.sendBroadcast(intent);
+        }
+    }
 
 //    private void updateAdsList(final Context context) {
 //
@@ -136,7 +140,7 @@ public class AdsUpdaterWorker extends Worker{
         updateAdsList(context);
         // 等待当次请求结束
         // 3分钟更新一次
-        safeWait(60*1000);
+        safeWait(UPDATE_TIME);
         Log.d(TAG, "结束广告更新");
     }
 
@@ -158,13 +162,16 @@ public class AdsUpdaterWorker extends Worker{
             Adv aModel = gson.fromJson(json.toString(),Adv.class);
             Log.e(TAG,"aModel.result="+aModel.total);
             List<Adv.Ads> list = aModel.records;
-            AdsUtils.saveAdList(context,list);
+            List<Adv.Ads> videoList = new ArrayList<>();
             int length = aModel.records.size();
             for(int i = 0;i<length;i++){
                 if(aModel.records.get(i).ad_type.equals("VIDEO")){
                     Log.e(TAG,"ad_url="+aModel.records.get(i).ad_url);
+                    videoList.add(aModel.records.get(i));
                 }
             }
+            AdsUtils.saveAdList(context,videoList);
+            notifyAdsUpdate(videoList);
 
 
         } catch (JSONException e) {
@@ -200,7 +207,7 @@ public class AdsUpdaterWorker extends Worker{
         public int total;
         public ArrayList<Ads> records;
 
-        public class Ads{
+        public class Ads {
             public int ad_order;
             public String ad_url;
             public String ad_detail;

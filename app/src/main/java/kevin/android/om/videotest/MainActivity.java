@@ -93,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
             ft.commit();
         }
 
-        AdsUpdaterWorker.getInstance(this).startWork();
 
     }
 }

@@ -1,8 +1,13 @@
 package kevin.android.om.videotest.fragments;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,18 +17,49 @@ import android.widget.ImageView;
 import com.pili.pldroid.player.PLMediaPlayer;
 import com.pili.pldroid.player.widget.PLVideoView;
 
+import java.io.File;
+import java.util.List;
+
 import kevin.android.om.videotest.R;
+import kevin.android.om.videotest.ads.AdsUpdaterWorker;
+import kevin.android.om.videotest.ads.AdsUtils;
 
 public class AdvertFragment extends Fragment implements PLMediaPlayer.OnCompletionListener,
                                                         PLMediaPlayer.OnErrorListener{
 
 
-    private static final String PATH[] = {"/sdcard/Android/test1","/sdcard/Android/test2"};
+//    private static final String PATH[] = {"/sdcard/Android/test1","/sdcard/Android/test2"};
     private int nextVideo = 0;
     private static final String TAG = AdvertFragment.class.getSimpleName();
     private View mView;
     private PLVideoView mPLVideoView;
     private ImageView imageCover;
+    private List<AdsUpdaterWorker.Adv.Ads> mAdList;
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+                final String action = intent.getAction();
+                Log.v(TAG, "mAdsUpdateReceiver, 视频更新广播 ");
+                if (AdsUpdaterWorker.ACTION_ADS_UPDATE.equals(action)) {
+                    if (!mPLVideoView.isPlaying()) {
+                        Log.v(TAG, "mAdsUpdateReceiver  更新绑定数据 ");
+                        if(haveVideo()){
+                            imageCover.setVisibility(View.INVISIBLE);
+                            mPLVideoView.setVisibility(View.VISIBLE);
+                            mPLVideoView.setVideoPath(getVideoPathByNum());
+                            mPLVideoView.setDisplayAspectRatio(PLVideoView.ASPECT_RATIO_PAVED_PARENT);
+                            mPLVideoView.start();
+                        }else{
+                            mPLVideoView.setVisibility(View.INVISIBLE);
+                            imageCover.setVisibility(View.VISIBLE);
+                        }
+                        startPlay();
+                    }
+                }
+
+        }
+    };
 
     public AdvertFragment() {
         // Required empty public constructor
@@ -46,15 +82,21 @@ public class AdvertFragment extends Fragment implements PLMediaPlayer.OnCompleti
         mView = inflater.inflate(R.layout.fragment_advert, container, false);
         mPLVideoView = (PLVideoView)mView.findViewById(R.id.advert_video);
         imageCover = (ImageView)mView.findViewById(R.id.imageCover);
-        mPLVideoView.setVisibility(View.VISIBLE);
-        imageCover.setVisibility(View.INVISIBLE);
+        mAdList = AdsUtils.getAdList(getActivity());
+        if(haveVideo()){
+            imageCover.setVisibility(View.INVISIBLE);
+            mPLVideoView.setVisibility(View.VISIBLE);
+            mPLVideoView.setVideoPath(getVideoPathByNum());
+            mPLVideoView.setDisplayAspectRatio(PLVideoView.ASPECT_RATIO_PAVED_PARENT);
+            mPLVideoView.start();
+        }else{
+            mPLVideoView.setVisibility(View.INVISIBLE);
+            imageCover.setVisibility(View.VISIBLE);
+        }
 
-
-        mPLVideoView.setVideoPath(PATH[0]);
-        mPLVideoView.setDisplayAspectRatio(PLVideoView.ASPECT_RATIO_PAVED_PARENT);
-        mPLVideoView.start();
         mPLVideoView.setOnCompletionListener(this);
         mPLVideoView.setOnErrorListener(this);
+        getActivity().registerReceiver(mBroadcastReceiver,new IntentFilter(AdsUpdaterWorker.ACTION_ADS_UPDATE));
         return mView;
     }
 
@@ -79,6 +121,7 @@ public class AdvertFragment extends Fragment implements PLMediaPlayer.OnCompleti
     public void onDestroy() {
         super.onDestroy();
         mPLVideoView.stopPlayback();
+        getActivity().unregisterReceiver(mBroadcastReceiver);
     }
 
 
@@ -88,16 +131,29 @@ public class AdvertFragment extends Fragment implements PLMediaPlayer.OnCompleti
         mPLVideoView.pause();
     }
 
-    @Override
-    public void onCompletion(PLMediaPlayer plMediaPlayer) {
-        Log.v(TAG, "onCompletion");
+    private void startPlay(){
         nextVideo++;
-        if(nextVideo == 2){
+        if (null == mAdList || mAdList.size() == nextVideo) {
             nextVideo = 0;
         }
-        mPLVideoView.setVideoPath(PATH[nextVideo]);
+
+        String videoPath = getVideoPathByNum();
+        Log.v(TAG, "onCompletion , videoPath=:" + videoPath);
+
+        if (videoPath == null) {
+//            notifyChange();
+            return;
+        }
+
+        mPLVideoView.setVideoPath(videoPath);
         mPLVideoView.setDisplayAspectRatio(PLVideoView.ASPECT_RATIO_PAVED_PARENT);
         mPLVideoView.start();
+    }
+
+    @Override
+    public void onCompletion(PLMediaPlayer plMediaPlayer) {
+        Log.v(TAG, "onCompletion 视频轮播的下标:"+nextVideo);
+        startPlay();
     }
 
     @Override
@@ -142,5 +198,65 @@ public class AdvertFragment extends Fragment implements PLMediaPlayer.OnCompleti
                 break;
         }
         return true;
+    }
+
+    /**
+     * 重新获取更新后的视频列表数据，如果有视频更新可以获取更新内容
+     * @return  返回视频本地或网络路径
+     */
+    private String getVideoPathByNum() {
+        mAdList = AdsUtils.getAdList(getActivity());
+        if (null != mAdList && mAdList.size() > 0) {
+            Log.v(TAG, "getVideoPathByNum, 视频轮播的数量: " + mAdList.size());
+            if (mAdList.size() <=nextVideo) {
+                nextVideo = 0;
+            }
+            String url = mAdList.get(nextVideo).ad_url;
+            if (!TextUtils.isEmpty(url)) {
+                Log.v(TAG, "getVideoPathByNum, 视频链接: " + nextVideo + ", " +
+                        mAdList.get(nextVideo).ad_url);
+                File file = AdsUtils.getCacheFile(getActivity(), mAdList.get(nextVideo).ad_url);
+                if(!file.exists()){
+                    return null;
+                }else{
+                    int length = AdsUtils.getDownloadFileAttr(getActivity(),file.getName());
+                    if(length!=-1&&length!=file.length()){
+                        file.delete();
+                        return null;
+                    }
+
+                }
+                String videoPath = file.getAbsolutePath();
+                Log.v(TAG, "getVideoPathByNum, 播放视频本地链接: " + videoPath);
+                return videoPath;
+            } else {
+                Log.w(TAG, "getVideoPathByNum, 播放视频链接: " + nextVideo + ", 为空");
+            }
+        }
+        return null;
+    }
+
+
+
+
+    private boolean haveVideo() {
+        boolean result = false;
+        List<AdsUpdaterWorker.Adv.Ads> adList = AdsUtils.getAdList(getActivity());
+        if (null != adList && adList.size() > 0) {
+            for(int i = 0;i<adList.size();i++){
+                String url = adList.get(i).ad_url;
+                if (!TextUtils.isEmpty(url)) {
+                    File file = AdsUtils.getCacheFile(getActivity(), url);
+                    if(file.exists()){
+                        result = true;
+                        break;
+                    }else{
+                        result =  false;
+                    }
+                }
+            }
+
+        }
+        return result;
     }
 }

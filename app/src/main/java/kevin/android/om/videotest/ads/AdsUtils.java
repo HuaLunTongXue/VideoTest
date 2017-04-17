@@ -52,45 +52,29 @@ public class AdsUtils {
      * 根据广告类型，返回广告
      *
      * @param context
-     * @param adsType 广告类型
      *
      * @return
      */
-//    public static AdList getAdList(Context context, Ads.AdType adsType) {
-//        final SharedPreferences sp = context.getSharedPreferences(AD_SP_NAME, Context.MODE_PRIVATE);
-//        Set<String> strings = sp.getStringSet(AD_KEY_NAME, new HashSet<String>());
-//        if (0 == strings.size()) {
-//            return null;
-//        }
-//
-//        AdList list = new AdList();
-//        list.records = new ArrayList<>();
-//
-//        Ads ads;
-//        for (String s : strings) {
-//
-//            ads = JsonUtils.fromJson(s, Ads.class);
-//
-//            if (adsType == null) {
-//                list.records.add(ads);
-//            } else {
-//                Ads.AdType adType = Ads.AdType.adTypeOf(ads.ad_type);
-//                if (adType == adsType) {
-//                    list.records.add(ads);
-//                }
-//            }
-//        }
-//
-//        list.total = list.records.size();
-//        // 根据广告次序排序
-//        Collections.sort(list.records);
-//
-//        return list;
-//    }
+    public static List<AdsUpdaterWorker.Adv.Ads> getAdList(Context context) {
+        final SharedPreferences sp = context.getSharedPreferences(AD_SP_NAME, Context.MODE_PRIVATE);
+        Set<String> strings = sp.getStringSet(AD_KEY_NAME, new HashSet<String>());
+        if (0 == strings.size()) {
+            return null;
+        }
 
-//    public static AdList getAdList(Context context) {
-//        return getAdList(context, null);
-//    }
+        List<AdsUpdaterWorker.Adv.Ads> list = new ArrayList<>();
+
+        AdsUpdaterWorker.Adv.Ads ads;
+        Gson gson =  new Gson();
+        for (String s : strings) {
+
+            ads = gson.fromJson(s, AdsUpdaterWorker.Adv.Ads.class);
+            list.add(ads);
+        }
+
+        return list;
+    }
+
 
     /**
      * 根据URL获取对应文件的缓存名称
