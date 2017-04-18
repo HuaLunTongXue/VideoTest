@@ -73,42 +73,6 @@ public class AdsUpdaterWorker extends Worker{
         }
     }
 
-//    private void updateAdsList(final Context context) {
-//
-//        final Odoo odoo = Odoo.getInstance(context);
-//        odoo.adList(new AdsListRequest(), new OdooHttpCallback<AdList>(context) {
-//            @Override
-//            public void onSuccess(AdList result) {
-//                if (null != result) {
-//                    ArrayList<Ads> ads = new ArrayList<>();
-//                    for (Ads ad : result.records) {
-//                        if (
-//                            null != ad.ad_url &&
-//                            null != ad.ad_type && ad.ad_url.length() > 7) {
-//                            ads.add(ad);
-//                        }
-//                    }
-//                    result.records = ads;
-//                    AdsUtils.saveAdList(context, result);
-//                    notifyAdsUpdate(result);
-//                    log.v(TAG, "updateAdsList, onSuccess: 广告更新成功");
-//                }
-//            }
-//
-//            @Override
-//            public void onError(HttpError error) {
-//                super.onError(error);
-//                log.w(TAG, "updateAdsList, onError: 广告更新失败");
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//                super.onFinish();
-//                log.v(TAG, "updateAdsList, onFinish: 当次广告更新结束");
-//            }
-//        });
-//    }
-
     private void updateAdsList(final Context context) {
         new Thread(new Runnable() {
             @Override
@@ -180,7 +144,7 @@ public class AdsUpdaterWorker extends Worker{
     }
 
 
-    public String post(String url, String json,Context context) throws IOException {
+    public void post(String url, String json,Context context) throws IOException {
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
         RequestBody body = RequestBody.create(JSON, json);
@@ -194,7 +158,6 @@ public class AdsUpdaterWorker extends Worker{
             httpGet(data,context);
             Log.i(TAG,"response.body()="+data);
 
-            return response.body().string();
         } else {
             Log.i(TAG,response.toString());
 

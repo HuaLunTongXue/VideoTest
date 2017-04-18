@@ -142,6 +142,10 @@ public class AdvertFragment extends Fragment implements PLMediaPlayer.OnCompleti
 
         if (videoPath == null) {
 //            notifyChange();
+            if(!haveVideo()){
+                mPLVideoView.setVisibility(View.INVISIBLE);
+                imageCover.setVisibility(View.VISIBLE);
+            }
             return;
         }
 

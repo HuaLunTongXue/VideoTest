@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import kevin.android.om.videotest.ads.AdsUpdaterWorker;
 import kevin.android.om.videotest.fragments.AdvertFragment;
 import kevin.android.om.videotest.fragments.GuideFragment;
 import kevin.android.om.videotest.fragments.ImageAdsFragment;
@@ -14,7 +13,7 @@ import kevin.android.om.videotest.fragments.InfoFragment;
 import kevin.android.om.videotest.fragments.ShoppingFragment;
 import kevin.android.om.videotest.fragments.SurpriseFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
     private static final String FRAGMENT_TAG_INFO = "info";
     private static final String FRAGMENT_TAG_ADVERT = "advert";
     private static final String FRAGMENT_TAG_IMAGE_ADVERT = "image_advert";
@@ -25,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home);
         (findViewById(R.id.mainBgId)).setBackgroundResource(R.color.mainBg);
 
 

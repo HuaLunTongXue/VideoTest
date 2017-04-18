@@ -7,9 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-
-
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".VApplication"
@@ -18,26 +16,34 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".HomeActivity"
             android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".activities.DeliverActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.ShoppingGuideActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.ProductListActivity" />
+        <activity
+            android:name=".activities.BigAdImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity
+            android:name=".VActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.MainActivity"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.DeliverActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activities.ShoppingGuideActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activities.ProductListActivity" />
-        <activity
-            android:name=".activities.BigAdImageActivity"
-            android:theme="@style/Base.Theme.AppCompat.Dialog"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".VActivity"
-            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
